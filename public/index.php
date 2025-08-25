@@ -10,7 +10,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Requests\MemberRequests\GetMemberRequestDTO;
 use Requests\MemberRequests\InsertMemberRequestDTO;
 use Requests\MemberRequests\UpdateMemberRequestDTO;
-
 $app = AppFactory::create();
 
 $container = new Container([
