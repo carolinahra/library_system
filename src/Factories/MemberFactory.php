@@ -1,8 +1,6 @@
 <?php
 
 namespace Factories;
-
-use Services\DatabaseService;
 use Models\Member;
 
 readonly final class MemberFactory extends Factory

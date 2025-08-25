@@ -27,12 +27,12 @@ readonly final class BookFactory extends Factory{
         return $this->getById($id);
     }
 
-    public function update(int $stock, ?string $name = null, ?int $state = null): Book
+    public function update(string $ISBN, ?string $name = null, ?int $state = null): Book
     {
         if ($name) {
-            return $this->updateName($name, $stock);
+            return $this->updateName($name, $ISBN);
         }
-        return $this->updateState($state, $stock);
+        return $this->updateState($state, $ISBN);
     }
 
     public function delete(string $ISBN): bool
