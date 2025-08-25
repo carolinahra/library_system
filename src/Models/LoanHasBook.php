@@ -1,5 +1,6 @@
 <?php
 
+namespace Models;
 class LoanHasBook
 {
     public function __construct(
