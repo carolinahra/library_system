@@ -5,7 +5,7 @@ spl_autoload_register(function ($class) {
     $baseDir = __DIR__ . '/';
     // echo $baseDir;
     $classPath = str_replace('\\', '/', $class) . '.php';
-    $file = $baseDir . $classPath;
+    // $file = $baseDir . $classPath;
     $file = "{$baseDir}{$classPath}";
 
     if (file_exists($file)) {
