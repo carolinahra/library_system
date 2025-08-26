@@ -4,7 +4,7 @@ namespace Factories;
 use Factories\Factory;
 use Models\LoanHasBook;
 
-readonly class LoanHasBookHasBookFactory extends Factory {
+readonly class LoanHasBookFactory extends Factory {
      public function get(?int $id = null, ?int $loanId = null, ?int $bookId = null, ?int $limit = null, ?int $offset = null): array|LoanHasBook
     {
         if ($id) {
