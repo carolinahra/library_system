@@ -10,4 +10,8 @@ class Book {
         public string $createdAt,
         public string $updatedAt,
         ) {}
+
+        public function isBookAvailable(): bool {
+            return $this->state == 1;
+        }
 }
