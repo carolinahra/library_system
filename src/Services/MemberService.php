@@ -9,9 +9,15 @@ class MemberService
 {
     public function __construct(private readonly MemberFactory $memberFactory) {}
 
-    public function get(?int $id = null, ?string $name = null, ?string $email = null, ?int $state = null, ?int $limit = null, ?int $offset = null): array|Member
+
+
+    public function getMany(?string $name = null, ?int $state = null, ?int $limit = null, ?int $offset = null): array
     {
-        return $this->memberFactory->get($id, $name, $email, $state, $limit, $offset);
+        return $this->memberFactory->get($name, $state, $limit, $offset);
+    }
+    public function getOne(?int $id = null, ?string $email = null): Member
+    {
+        return $this->memberFactory->get($id, $email);
     }
 
     public function insert(string $name, string $email, int $state): Member

@@ -25,7 +25,7 @@ readonly class DatabaseService
     }
 
 
-    public function get(string $sql, array $params = []): array
+    public function get(string $sql, array $params = []): ?array
     {
         $stmt = $this->pdo->prepare($sql);
         foreach ($params as $index => $param) {
@@ -59,6 +59,17 @@ readonly class DatabaseService
         return $deletedRows > 0;
     }
 
+    public function exists(string $sql, array $params = []): bool
+    {
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($params as $index => $param) {
+            $paramType = is_int($param) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue(++$index, $param, $paramType);
+        }
+        $stmt->execute();
+        return (bool) $stmt->fetchColumn(); 
+     
+    }
     public function startTransaction()
     {
         $this->pdo->beginTransaction();

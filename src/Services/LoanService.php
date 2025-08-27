@@ -21,4 +21,8 @@ readonly class LoanService {
     public function delete(string $reference): bool {
         return $this->loanFactory->delete($reference);
     }
+
+    public function isExistingReference(string $reference): bool {
+        return $this->loanFactory->isExistingReference($reference);
+    }
 }

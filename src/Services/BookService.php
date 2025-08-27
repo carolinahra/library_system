@@ -5,13 +5,26 @@ namespace Services;
 use Factories\BookFactory;
 use Models\Book;
 
+
 readonly class BookService
 {
     public function __construct(private BookFactory $bookFactory) {}
 
-    public function get(?int $id = null, ?string $ISBN = null, ?string $name = null, ?int $state = null, ?int $limit = null, ?int $offset = null): Book|array
+    public function getOne(?int $id = null, ?string $ISBN = null): Book
     {
-        return $this->bookFactory->get($id, $ISBN, $name, $state, $limit, $offset);
+        return $this->bookFactory->get($id, $ISBN);
+    }
+
+    /**
+     * 
+     * @param mixed $name
+     * @param mixed $state
+     * @param mixed $limit
+     * @param mixed $offset
+     * @return Book[]
+     */
+    public function getMany(?string $name = null, ?int $state = null, ?int $limit = null, ?int $offset = null, ?array $ISBNs = null ): array {
+        return $this->bookFactory->get($name, $state, $limit, $offset, $ISBNs);
     }
 
     public function insert(string $ISBN, string $name, int $stock, int $state): Book
