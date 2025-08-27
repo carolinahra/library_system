@@ -1,10 +1,13 @@
 <?php
 
 namespace Factories;
+
 use Factories\Factory;
 use Models\Book;
-readonly final class BookFactory extends Factory{
-    public function get(?int $id = null, ?string $ISBN = null, ?string $name = null, ?int $state = null, ?int $limit = null, ?int $offset = null): array|Book
+
+readonly final class BookFactory extends Factory
+{
+    public function get(?int $id = null, ?string $ISBN = null, ?string $name = null, ?int $state = null, ?int $limit = null, ?int $offset = null, ?array $ISBNs = null): array|Book
     {
         if ($id) {
             return $this->getById(($id));
@@ -17,6 +20,9 @@ readonly final class BookFactory extends Factory{
         }
         if ($state) {
             return $this->getByState($state);
+        }
+        if ($ISBNs) {
+            return $this->getManyByISBNs($ISBNs);
         }
         return $this->getAll($limit, $offset);
     }
@@ -57,6 +63,15 @@ readonly final class BookFactory extends Factory{
     private function getAll(int $limit, int $offset): array
     {
         $results = $this->databaseService->get("SELECT * FROM Book LIMIT ? OFFSET ?", [$limit, $offset]);
+        $books = array_map(callback: fn($result): Book => new Book((int) $result['id'], $result['ISBN'], $result['name'], $result['stock'], $result['state'], $result['created_at'], $result['updated_at']), array: $results);
+        return $books;
+    }
+
+    private function getManyByISBNs(array $ISBNs): array
+    {
+        $placeholders = array_map(fn($ISBN) => '?', $ISBNs);
+        $placeholders = implode(',', $placeholders);
+        $results = $this->databaseService->get("SELECT * FROM Book WHERE ISBN IN ({$placeholders})", $ISBNs);
         $books = array_map(callback: fn($result): Book => new Book((int) $result['id'], $result['ISBN'], $result['name'], $result['stock'], $result['state'], $result['created_at'], $result['updated_at']), array: $results);
         return $books;
     }

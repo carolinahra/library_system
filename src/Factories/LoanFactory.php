@@ -42,6 +42,10 @@ readonly class LoanFactory extends Factory
         return $this->databaseService->delete("DELETE FROM Loan WHERE ISBN = ?", [$id]);
     }
 
+    public function isExistingReference(string $reference): bool {
+        return $this->databaseService->exists("SELECT * FROM Loan WHERE reference = ?", [$reference]);
+    }
+
     private function getById(int $id): Loan
     {
         $result = $this->databaseService->get("SELECT * FROM Loan WHERE id = ?", [$id])[0];
@@ -76,6 +80,8 @@ readonly class LoanFactory extends Factory
         $loans = array_map(callback: fn($result): Loan => new Loan((int) $result['id'], $result['member_id'], $result['reference'], $result['state'], $result['due_date'], $result['created_at'], $result['updated_at']), array: $results);
         return $loans;
     }
+
+
 
 
     private function updateUpdatedAt(string $reference): Loan | null
